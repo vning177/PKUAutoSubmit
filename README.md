@@ -8,7 +8,7 @@
 
 ## 说明
 
-本项目基于[PKUAutoSubmit](https://github.com/Bruuuuuuce/PKUAutoSubmit)3.0版本开发，因此跟随使用了[Apache License 2.0](https://github.com/xiazhongyv/PKUActionSubmit/blob/master/LICENSE)证书。在[PKUAutoSubmit](https://github.com/Bruuuuuuce/PKUAutoSubmit)的基础上对代码略有改动，主要是更改了门户页面的click方法（规避可能的报错），以及将部分输入由Actions Secrets参数输入（保证账户的安全性）。
+本项目基于[PKUAutoSubmit](https://github.com/Bruuuuuuce/PKUAutoSubmit)3.0版本开发，因此跟随使用了[Apache License 2.0](https://github.com/xiazhongyv/PKUActionSubmit/blob/master/LICENSE)证书。在[PKUAutoSubmit](https://github.com/Bruuuuuuce/PKUAutoSubmit)的基础上对代码略有改动，主要是更改了门户页面的click方法（规避可能的报错），修复了因为缺失默认联系方式引起的报错，修复了密码包含特殊字符的问题，以及将部分输入由Actions Secrets参数输入（保证账户的安全性）。
 
 本项目提供了Github Actions支持，所以现在你只需要在网页端点点鼠标，无需下载任何文件到你自己的电脑或者服务器，更不需要时刻都开着电脑了。
 
@@ -34,7 +34,7 @@
 
     点击右侧New Repository secret，然后添加 ID（大写的），然后输入你的学号
 
-    再点击右侧New Repository secret，然后添加 PASSWORD（大写的），然后输入你的密码
+    再点击右侧New Repository secret，然后添加 PASSWORD（大写的），然后输入你的密码。【如果你的密码里有特殊字符如()/\, 请用双引号将你的密码包裹起来，即在value一栏输入："yourpassword"】
 
     再点击右侧New Repository secret，然后添加 MAIL_ADDRESS（大写的），然后输入你的电子邮箱地址
 
@@ -77,12 +77,12 @@ Settings -> Actions -> Disabled Actions
 
 Q：报错，IAAA登录失败
 
-A：请手动登录下门户，检查下是否会弹出人脸验证授权，这个授权页面会干扰程序运行，它只会在门户显示一次，处理后重新运行就好了。如果还不行请重新设置下Secrets的账户密码。如果还不行请把报错信息提交到issues.
+A：请手动登录下门户，检查下是否会弹出人脸验证授权，这个授权页面会干扰程序运行，它只会在门户显示一次，处理后重新运行就好了。以及还有可能是微信扫码关注门户的页面，只要微信扫码关注了，就不会再弹出这个二维码页面了。如果还不行请重新设置下Secrets的账户密码确保没有输入错误。如果还不行请把报错信息提交到issues.
     
 
-Q：报错，缺失ID/PASSWORD/SENDKEY参数
+Q：报错，缺失ID/PASSWORD/SENDKEY等参数
     
-A：要在repo的Setting - Secrets里设置这三个值哦，点进New Repository secret会有两栏，KEY填写全大写的字母ID或PASSWORD或SENDKEY，value填写具体的内容。
+A：要在repo的Setting - Secrets里设置这几个值哦，点进New Repository secret会有两栏，KEY填写全大写的字母ID或PASSWORD或SENDKEY或其他，value填写具体的内容。
     
     
 Q：报错，超时错误
@@ -90,16 +90,25 @@ Q：报错，超时错误
 A：目前我查看了一些fork repo的actions，以及接收到了一些反馈，目前大多数账号是可以反复运行并保证报备成功的，有少部分账号会偶发甚至持续出现超时报错，目前正在排查原因。
  
 AA：排查了半天，没找到问题，感觉就是报备网站不稳定，可能要改成每天上下午各运行一次要好一些？
-
+    
+AAA: 感谢Xzonn大佬的PR，超时有可能是因为有的同学没有默认的邮箱和手机号，导致“提交”按钮处于不可点击的状态。现在已经更新了，请无法运行的大家Fetch upstream或重新Fork试一下~
+  
+    
+Q：报错，xxxxxxx.sh: line 4: syntax error near unexpected token xx 语法错误
+    
+A：请在Secrets填写你的密码时双引号包裹起你的密码，报这个语法错误是因为你的Secrets里有特殊字符
+    
     
 Q：Actions workflow没有按时运行/我没有在指定的时间收到微信提醒
 
 A：Github Actions由于是免费资源，本身资源有限，所以实际上workflow是在指定的时间开始排队。报备这种事晚个几分钟十几分钟问题不大。不过如果想要准点收到报备成功信息，一个比较好的策略是避开整点半点时间。如果workflow完全没有按照计划运行，请提交issue.
     
+    
 Q：workflow运行不了，按钮是不可点击状态
 
 A：找一找页面上有没有关于是否允许脚本在fork的仓库上运行的提示，点击“Enable...”就好
 
+    
 ## 免责声明
 本代码只供参考学习，造成的一切后果由使用者自行承担。
 
